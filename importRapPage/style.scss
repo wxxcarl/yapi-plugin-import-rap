@@ -1,0 +1,22 @@
+
+.Mockurl{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    span:first-child{
+        white-space: nowrap;
+    }
+    span:last-child{
+        flex: 1;
+    }
+}
+
+.rap-help{
+    padding: 40px 10px 0;
+    color: #999;
+    
+    h3{
+        float: left;
+        color: #999;
+    }
+}

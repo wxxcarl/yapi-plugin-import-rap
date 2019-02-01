@@ -1,0 +1,10 @@
+{
+    "key": "yapi-plugin",
+    "name": "yapi-plugin-import-rap",
+    "version": "0.0.1",
+    "description": "a yapi plugin for import projects from rap1",
+    "main": "index.js",
+    "scripts": {
+      "dev": "node index.js"
+    }
+  }
