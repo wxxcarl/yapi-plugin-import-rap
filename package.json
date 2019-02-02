@@ -1,20 +1,20 @@
 {
-    "key": "yapi-plugin",
-    "name": "yapi-plugin-import-rap",
-    "version": "0.0.1",
-    "description": "a yapi plugin for import projects from rap1",
-    "main": "index.js",
-    "keywords": [
-      "yapi",
-      "rap",
-      "plugin",
-      "import"
-    ],
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/wxxcarl/yapi-plugin-import-rap.git"
-    },
-    "scripts": {
-      "dev": "node index.js"
-    }
+  "key": "yapi-plugin",
+  "name": "yapi-plugin-import-rap",
+  "version": "0.0.2",
+  "description": "a yapi plugin for import projects from rap1",
+  "main": "index.js",
+  "keywords": [
+    "yapi",
+    "rap",
+    "plugin",
+    "import"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wxxcarl/yapi-plugin-import-rap.git"
+  },
+  "scripts": {
+    "dev": "node index.js"
   }
+}
