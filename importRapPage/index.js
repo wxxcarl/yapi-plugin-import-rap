@@ -48,7 +48,7 @@ class ImportRap extends Component {
           res_body.properties[identifier]={
             items: {
               mock:{
-                mock: type=='number' ? '@integer' : ('@'+type)
+                mock: type=='number' ? '@integer(1,99999)' : ('@'+type)
               },
               type
             },
@@ -104,9 +104,6 @@ class ImportRap extends Component {
               message.error(`插入${fName}${t.name}失败: ${res3.data.errmsg}`);
               console.error(`插入${fName}${t.name}失败: ${res3.data.errmsg}`);
               return false
-            }
-            if(rm != 'GET' && rm != 'POST'){
-              console.warn(`【${rm}】请求方式导入可能有问题`);
             }
             let interface_id = res3.data.data._id
             let req_query = []
