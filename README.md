@@ -3,16 +3,17 @@
 
 1. `npm install yapi-plugin-import-rap`
 
-2. 在config.json中新增插件配置:
-
+2. 在config.json中新增插件配置
+    <pre>
     "plugins": [{
-      "name": "import-rap",
-      "options": {
-        "rapOrigin": "http://192.168.1.100:8000" // rap项目地址
-      }
+        "name": "import-rap",
+        "options": {
+            "rapOrigin": "http://192.168.1.100:8000" // rap项目地址
+        }
     }]
+    </pre>
 
-3.  在yapi项目的菜单中会增加“Rap项目导入”菜单，填写rap project id ，执行即可。
+3. 在yapi项目的菜单中会增加“Rap项目导入”菜单，填写rap project id ，执行即可。
 
 
 ### 说明：
