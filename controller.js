@@ -30,7 +30,8 @@ class RapController extends baseController {
         return (ctx.body = yapi.commons.resReturn(null, 406, '没有权限'));
       }
     }
-    await axios.get(yapi.WEBCONFIG.rapOrigin+'/api/queryRAPModel.do?projectId='+rap_project_id).then(res => {
+    debugger
+    await axios.get(global.importRap.origin+'/api/queryRAPModel.do?projectId='+rap_project_id).then(res => {
         if(res.data && res.data.modelJSON){
             let modelJSON = res.data.modelJSON.replace(/'/g,'"')
             result = yapi.commons.resReturn(JSON.parse(modelJSON));
