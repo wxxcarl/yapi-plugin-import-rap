@@ -44,7 +44,11 @@ class ImportRap extends Component {
             type: "array"
           }
         } else {
-          let arr = rp.remark ? JSON.parse(rp.remark.replace('@mock=','')) : rp.remark.indexOf('$order') > -1 ? rp.remark.split('$order')[1].replace(/[()\'\"]/g,'').split(',') : []
+          let arr = []
+          if(rp.remark){
+            let mocksr = JSON.parse(rp.remark.replace('@mock=',''))
+            arr = mocksr.indexOf('$order') > -1 ? mocksr.split('$order')[1].replace(/[()\'\"]/g,'').split(',') : []
+          }
           res_body.properties[identifier]={
             items: {
               mock:{
@@ -61,29 +65,24 @@ class ImportRap extends Component {
       } else {
         let mock = rp.remark ? rp.remark.replace('@mock=','').replace(/[\'\"]/g,'') : ''
         let arr = mock && mock.indexOf('$order') > -1 ? mock.split('$order')[1].replace(/[()\'\"]/g,'').split(',') : []
-        let len = decorate && decorate.indexOf('+') < 0 ? decorate : 0
-        let rule = ''
-        let increment = decorate && rp.dataType=='number' && decorate.indexOf('+') > 0
+        let len = decorate && decorate.indexOf('+') < 0 && decorate.indexOf('.') < 0 ? decorate : 0
+        let rule
         if(rp.dataType=='number'){
-          if(increment) {
+          if(decorate && decorate.indexOf('+') > -1) {
             rule = `@increment(${decorate.replace('+','')})`
-          } else {
-            if(decorate.indexOf('.') > -1){
-              rule = '@float(0.0001, 999999)'
-            } else {
-              rule = '@integer(1, 999999)'
-            }
+          } else if(decorate && decorate.indexOf('.') > -1) {
+            rule = '@float(1, 999999, 1, 10)'
+          } else{
+            rule = mock ? mock : '@integer(1, 999999)'
           }
         } else {
-          rule = '@'+rp.dataType
+          rule = mock
         }
         
         let ps = {
           description: rp.name,
-          mock: {
-            mock: rule
-          },
-          default: mock || undefined,
+          mock: rule ? { mock: rule } : undefined,
+          default: arr.length === 0 ? mock : undefined,
           type: rp.dataType,
           minLength: len ? len.split('-')[0] : undefined,
           maxLength: len ? (len.split('-')[1] ? len.split('-')[1] : len.split('-')[0]) : undefined
