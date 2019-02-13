@@ -31,12 +31,12 @@ class ImportRap extends Component {
     key.forEach(rp => {
       let identifier =rp.identifier.split('|')[0]
       res_body.required.push(identifier)
-      let len = rp.identifier.split('|')[1]
+      let decorate = rp.identifier.split('|')[1]
       // rp.dataType.match(/array<(.*)>/
       if(rp.dataType.match(/array<(.*)>/)) {
         let type = rp.dataType.match(/array<(.*)>/)[1]
         if(type == 'object'){
-          len = len || '1'
+          let len = decorate || '1'
           res_body.properties[identifier]={
             items: this.formatDeep(rp.parameterList),
             maxItems: len.split('-')[0],
@@ -48,7 +48,7 @@ class ImportRap extends Component {
           res_body.properties[identifier]={
             items: {
               mock:{
-                mock: type=='number' ? '@integer(1,99999)' : ('@'+type)
+                mock: type=='number' ? '@integer(1, 999999)' : ('@'+type)
               },
               type
             },
@@ -61,12 +61,29 @@ class ImportRap extends Component {
       } else {
         let mock = rp.remark ? rp.remark.replace('@mock=','').replace(/[\'\"]/g,'') : ''
         let arr = mock && mock.indexOf('$order') > -1 ? mock.split('$order')[1].replace(/[()\'\"]/g,'').split(',') : []
-
+        let len = decorate && decorate.indexOf('+') < 0 ? decorate : 0
+        let rule = ''
+        let increment = decorate && rp.dataType=='number' && decorate.indexOf('+') > 0
+        if(rp.dataType=='number'){
+          if(increment) {
+            rule = `@increment(${decorate.replace('+','')})`
+          } else {
+            if(decorate.indexOf('.') > -1){
+              rule = '@float(0.0001, 999999)'
+            } else {
+              rule = '@integer(1, 999999)'
+            }
+          }
+        } else {
+          rule = '@'+rp.dataType
+        }
+        
         let ps = {
           description: rp.name,
-          mock: mock ? {
-            mock
-          } : undefined,
+          mock: {
+            mock: rule
+          },
+          default: mock || undefined,
           type: rp.dataType,
           minLength: len ? len.split('-')[0] : undefined,
           maxLength: len ? (len.split('-')[1] ? len.split('-')[1] : len.split('-')[0]) : undefined
