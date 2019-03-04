@@ -139,16 +139,7 @@ class ImportRap extends Component {
                 })
               })
             } else {
-              t.requestParameterList.forEach(rp => {
-                req_body_other.required.push(rp.identifier)
-                req_body_other.properties[rp.identifier] = {
-                  description: rp.name,
-                  mock: rp.remark ? {
-                    mock: rp.remark.replace('@mock=','').replace(/[\'\"]/g,'')
-                  } : undefined,
-                  type: rp.dataType
-                }
-              })
+              req_body_other = this.formatDeep(t.requestParameterList)
             }
 
             let res_body = this.formatDeep(t.responseParameterList)
