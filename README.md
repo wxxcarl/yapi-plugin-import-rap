@@ -1,7 +1,7 @@
 
 # yapi-plugin-import-rap
 
-1. `npm install yapi-plugin-import-rap`
+1. `yapi plugin --name yapi-plugin-import-rap`
 
 2. 在config.json中新增插件配置
     <pre>
