@@ -4,6 +4,8 @@ import React, { PureComponent as Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Input, message } from 'antd';
+import JSON5 from 'json5';
+
 const Search = Input.Search;
 @connect(state => {
   return {
@@ -46,7 +48,7 @@ class ImportRap extends Component {
         } else {
           let arr = []
           if(rp.remark){
-            let mocksr = JSON.parse(rp.remark.replace('@mock=',''))
+            let mocksr = JSON5.parse(rp.remark.replace('@mock=',''))
             arr = mocksr.indexOf('$order') > -1 ? mocksr.split('$order')[1].replace(/[()\'\"]/g,'').split(',') : []
           }
           res_body.properties[identifier]={
@@ -154,12 +156,12 @@ class ImportRap extends Component {
               path: '',
               req_body_form: [],
               req_body_is_json_schema: true,
-              req_body_other: rm === 'GET' ? undefined : JSON.stringify(req_body_other),
+              req_body_other: rm === 'GET' ? undefined : JSON5.stringify(req_body_other),
               req_body_type: rm === 'GET' ? undefined : 'json',
               req_headers: rm === 'GET' ? [] : [{name: "Content-Type", value: "application/json"}],
               req_params: [],
               req_query: rm === 'GET' ? req_query : undefined,
-              res_body: JSON.stringify(res_body),
+              res_body: JSON5.stringify(res_body),
               res_body_is_json_schema: true,
               res_body_type: 'json',
               status: 'done',

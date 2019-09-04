@@ -1,6 +1,7 @@
 const baseController = require('controllers/base.js');
 const yapi = require('yapi.js');
-const axios = require('axios')
+const axios = require('axios');
+const JSON5 = require('json5');
 
 class RapController extends baseController {
   constructor(ctx) {
@@ -33,7 +34,7 @@ class RapController extends baseController {
     await axios.get(global.importRap.origin+'/api/queryRAPModel.do?projectId='+rap_project_id).then(res => {
         if(res.data && res.data.modelJSON){
             let modelJSON = res.data.modelJSON.replace(/'/g,'"')
-            result = yapi.commons.resReturn(JSON.parse(modelJSON));
+            result = yapi.commons.resReturn(JSON5.parse(modelJSON));
         } else {
             result = yapi.commons.resReturn(null, 400, '查询数据失败，请确认rap地址正确，以及projectId存在')
         }
