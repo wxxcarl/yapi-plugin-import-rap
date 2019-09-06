@@ -48,7 +48,7 @@ class ImportRap extends Component {
         } else {
           let arr = []
           if(rp.remark){
-            let mocksr = JSON5.parse(rp.remark.replace('@mock=',''))
+            let mocksr = rp.remark.replace('@mock=','');
             arr = mocksr.indexOf('$order') > -1 ? mocksr.split('$order')[1].replace(/[()\'\"]/g,'').split(',') : []
           }
           res_body.properties[identifier]={
